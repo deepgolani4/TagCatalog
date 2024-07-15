@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './modules/authModule/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { IdentitySchema } from './models/auth.schema';
-import IdentityEntity from './models/auth.model';
+import { DbModule } from './dbGateway/db.module';
 
 @Module({
   imports: [
@@ -22,9 +21,7 @@ import IdentityEntity from './models/auth.model';
       }),
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([
-      { name: IdentityEntity.name, schema: IdentitySchema },
-    ]),
+    DbModule,
     AuthModule,
   ],
   controllers: [],
