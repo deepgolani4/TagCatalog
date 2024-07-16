@@ -9,3 +9,4 @@ dist
 .history
 /**/.env.local
 /**/*.tsbuildinfo
+sample
