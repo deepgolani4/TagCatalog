@@ -8,7 +8,15 @@ export default class MongoAuthGatewayService {
     private readonly IdentityModel: Model<IdentityEntity>,
   ) {}
 
-  async getAll(): Promise<IdentityEntity[]> {
-    return this.IdentityModel.find().exec();
+  async findUserByUserId(userId: string): Promise<IdentityEntity> {
+    return this.IdentityModel.findOne({ userId: userId }).exec();
+  }
+
+  async saveUser(document: IdentityEntity): Promise<IdentityEntity> {
+    return this.IdentityModel.create(document);
+  }
+
+  async updateUserLoginDetails({ userId }): Promise<IdentityEntity> {
+    return this.IdentityModel.updateOne({});
   }
 }
