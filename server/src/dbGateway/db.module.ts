@@ -13,6 +13,7 @@ import { UserDataSchema } from 'src/models/user.schema';
     MongooseModule.forFeature([
       { name: IdentityEntity.name, schema: IdentitySchema },
     ]),
+
     MongooseModule.forFeature([
       { name: NotesEntity.name, schema: NotesSchema },
     ]),

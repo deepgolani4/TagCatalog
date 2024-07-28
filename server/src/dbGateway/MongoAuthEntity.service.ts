@@ -16,7 +16,11 @@ export default class MongoAuthGatewayService {
     return this.IdentityModel.create(document);
   }
 
-  async updateUserLoginDetails({ userId }): Promise<IdentityEntity> {
-    return this.IdentityModel.updateOne({});
-  }
+  // async updateUserLoginDetails({
+  //   userId,
+  // }: {
+  //   userId: string;
+  // }): Promise<IdentityEntity> {
+  //   return this.IdentityModel.updateOne({ userId: userId }, {});
+  // }
 }

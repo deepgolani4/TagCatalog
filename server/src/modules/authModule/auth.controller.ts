@@ -5,8 +5,8 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly appService: AuthService) {}
 
-  @Get()
-  async getAllData() {
-    return await this.appService.getAllData();
-  }
+  // @Get()
+  // async getAllData() {
+  //   return await this.appService.getAllData();
+  // }
 }
