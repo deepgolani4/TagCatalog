@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import MongoAuthGatewayService from 'src/dbGateway/MongoAuthEntity.service';
+import { LoginResponseDto } from 'src/dto/auth/loginResponse.dto';
 import { SignUserAndLoginRequestDto } from 'src/dto/auth/SignUpAndLoginUser.dto';
 import IdentityEntity from 'src/models/auth.model';
 import { JwtUtils } from 'src/utils/jwtUtil';
@@ -16,7 +17,7 @@ export class AuthService extends JwtUtils {
     const isUserAlreadyExiting =
       await this.mongoAuthGatewayService.findUserByUserId(request.userId);
 
-    if (isUserAlreadyExiting.userId) {
+    if (isUserAlreadyExiting) {
       throw new HttpException(
         'user with emailId already exists',
         HttpStatus.CONFLICT,
@@ -31,7 +32,7 @@ export class AuthService extends JwtUtils {
     throw new HttpException('user successfully signed up', HttpStatus.CREATED);
   }
 
-  async login(request: SignUserAndLoginRequestDto): Promise<string> {
+  async login(request: SignUserAndLoginRequestDto): Promise<LoginResponseDto> {
     const userData = await this.mongoAuthGatewayService.findUserByUserId(
       request.userId,
     );
@@ -40,7 +41,11 @@ export class AuthService extends JwtUtils {
       throw new HttpException('user does not exist', HttpStatus.BAD_REQUEST);
 
     if (userData.password === request.password) {
-      return 'user successfully loggedIn';
+      return {
+        accessToken: this.generateAccessToken({ userId: userData.userId }),
+        refreshToken: this.generateRefreshToken({ userId: userData.userId }),
+        userName: request.userId,
+      };
     } else {
       throw new HttpException('password is incorrect', HttpStatus.BAD_REQUEST);
     }

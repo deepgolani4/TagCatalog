@@ -13,6 +13,11 @@ export class JwtUtils extends Configuration {
   }
 
   generateRefreshToken(payload: Record<string, string | string[]>): string {
+    console.log(
+      this.jwtKey,
+      this.jwtRefreshExpiry,
+      typeof this.jwtAccessExpiry,
+    );
     return sign(payload, this.jwtKey, {
       expiresIn: this.jwtRefreshExpiry,
     });
